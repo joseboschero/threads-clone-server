@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,11 +15,11 @@ model User {
   phoneNumber String?
   image_url   String?
   description String?
-  socialUrl   String
-  Threads     Thread[]
-  Reply       Reply[]
+  socialUrl   String?
   Followers   Follower[]
   Following   Following[]
+  Reply       Reply[]
+  Threads     Thread[]
 }
 
 model Follower {
@@ -45,8 +42,8 @@ model Thread {
   userId      Int
   createdAt   DateTime
   state       Boolean
-  User        User     @relation(fields: [userId], references: [id])
   Replies     Reply[]
+  User        User     @relation(fields: [userId], references: [id])
 }
 
 model Reply {
@@ -58,8 +55,8 @@ model Reply {
   parentId     Int?
   createdAt    DateTime
   state        Boolean
-  User         User?    @relation(fields: [userId], references: [id])
-  Thread       Thread?  @relation(fields: [threadId], references: [id])
   ParentReply  Reply?   @relation("ChildReplies", fields: [parentId], references: [id])
   ChildReplies Reply[]  @relation("ChildReplies")
+  Thread       Thread?  @relation(fields: [threadId], references: [id])
+  User         User?    @relation(fields: [userId], references: [id])
 }
