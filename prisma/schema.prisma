@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int         @id @default(autoincrement())
+  username    String
+  password    String
+  email       String
+  phoneNumber String?
+  image_url   String?
+  description String?
+  socialUrl   String
+  Threads     Thread[]
+  Reply       Reply[]
+  Followers   Follower[]
+  Following   Following[]
+}
+
+model Follower {
+  id     Int   @id @default(autoincrement())
+  userId Int?
+  User   User? @relation(fields: [userId], references: [id])
+}
+
+model Following {
+  id     Int   @id @default(autoincrement())
+  userId Int?
+  User   User? @relation(fields: [userId], references: [id])
+}
+
+model Thread {
+  id          Int      @id @default(autoincrement())
+  description String
+  media       String
+  likes       Int
+  userId      Int
+  createdAt   DateTime
+  state       Boolean
+  User        User     @relation(fields: [userId], references: [id])
+  Replies     Reply[]
+}
+
+model Reply {
+  id           Int      @id @default(autoincrement())
+  description  String
+  likes        Int
+  userId       Int?
+  threadId     Int?
+  parentId     Int?
+  createdAt    DateTime
+  state        Boolean
+  User         User?    @relation(fields: [userId], references: [id])
+  Thread       Thread?  @relation(fields: [threadId], references: [id])
+  ParentReply  Reply?   @relation("ChildReplies", fields: [parentId], references: [id])
+  ChildReplies Reply[]  @relation("ChildReplies")
+}
