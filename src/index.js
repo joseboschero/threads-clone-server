@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes";
+import morgan from "morgan";
+
+require("dotenv").config();
 
 const server = express();
 
@@ -14,7 +17,7 @@ const corsOptions = {
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cors(corsOptions));
-
+server.use(morgan("dev"));
 server.use("/", router);
 
 server.use((err, req, res, next) => {

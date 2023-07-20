@@ -1,5 +1,6 @@
 import server from "./src";
+require("dotenv").config();
 
-server.listen(3001, () => {
-  console.log(`🚀 [Server]: Running on port 3000`);
+server.listen(process.env.PORT, () => {
+  console.log(`🚀 [Server]: Running on port ${process.env.PORT}`);
 });
