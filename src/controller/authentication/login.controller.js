@@ -22,7 +22,7 @@ export const userLogin = async (req, res) => {
 
     const match = await comparePassword(user.password, password);
 
-    if (!match) return res.status(401).json({ error: "Wrong credentials" });
+    if (!match) return res.status(401).json({ error: "Wrong password" });
 
     const token = await signToken(user.id);
 
