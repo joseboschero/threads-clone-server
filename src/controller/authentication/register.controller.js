@@ -11,15 +11,27 @@ export const userRegister = async (req, res) => {
 
     const hash = await hashPassword(password);
 
-    const user = await prisma.user.create({
-      data: {
-        username,
-        email,
-        password: hash,
+    const isCreated = await prisma.user.findFirst({
+      where: {
+        OR: [{ username }, { email }],
+      },
+      select: {
+        id: true,
       },
     });
 
-    return res.status(201).json({ user });
+    if (!isCreated) {
+      const user = await prisma.user.create({
+        data: {
+          username,
+          email,
+          password: hash,
+        },
+      });
+      return res.status(201).json({ user });
+    } else {
+      return res.status(400).send({ error: "User already exists" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: "Something went wrong" });

@@ -7,7 +7,7 @@ export const userLogin = async (req, res) => {
 
     if ((!username && !email) || !password)
       return res.status(406).json({ error: "Missing required fields" });
-
+    console.log(email);
     const user = await prisma.user.findFirst({
       where: {
         OR: [{ username }, { email }],

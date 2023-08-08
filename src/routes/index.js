@@ -6,6 +6,8 @@ const router = Router();
 
 router.use("/login", loginRoutes);
 router.use("/register", registerRoutes);
-router.use("/test", isAuthenticated, (req, res) => res.status(200).send("ok"));
+router.use("/test", isAuthenticated, (req, res) =>
+  res.status(200).send(req.user)
+);
 
 export default router;
