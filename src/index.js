@@ -19,6 +19,7 @@ server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cors(corsOptions));
 server.use(morgan("dev"));
 server.use("/", router);
+server.use("/media", express.static("media"));
 
 server.use((err, req, res, next) => {
   const status = err.status || 500;
