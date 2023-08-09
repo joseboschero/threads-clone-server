@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL") // uses connection pooling
+  url      = env("DATABASE_URL") // uses connection pooling
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
   // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
@@ -18,6 +18,7 @@ model User {
   image_url   String?
   description String?
   socialUrl   String?
+  verified    Boolean     @default(false)
   Followers   Follower[]
   Following   Following[]
   Reply       Reply[]
