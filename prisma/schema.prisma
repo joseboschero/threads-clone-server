@@ -41,7 +41,7 @@ model Thread {
   media       String
   likes       Int
   userId      Int
-  createdAt   DateTime
+  createdAt   DateTime 
   state       Boolean
   Replies     Reply[]
   User        User     @relation(fields: [userId], references: [id])
