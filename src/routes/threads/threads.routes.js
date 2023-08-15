@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { getAllThreads } from "../../controller/threads/threads.controller";
-import { postThreads } from "../../controller/threads/threads.create";
+import {
+  getAllThreads,
+  postThread,
+} from "../../controller/threads/threads.controller";
 
 const threadsRouter = Router();
 
 threadsRouter.get("/", getAllThreads);
-threadsRouter.post("/", postThreads);
+threadsRouter.post("/", postThread);
 
 export default threadsRouter;

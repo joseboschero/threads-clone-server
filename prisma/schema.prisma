@@ -37,11 +37,11 @@ model Following {
 
 model Thread {
   id          Int      @id @default(autoincrement())
-  description String
-  media       String
-  likes       Int
+  description String?
+  media       String?
+  likes       Int?
   userId      Int
-  createdAt   DateTime 
+  createdAt   DateTime
   state       Boolean
   Replies     Reply[]
   User        User     @relation(fields: [userId], references: [id])

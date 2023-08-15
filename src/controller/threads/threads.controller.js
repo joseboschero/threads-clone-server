@@ -29,3 +29,35 @@ export const getAllThreads = async (req, res) => {
     return res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+export const postThread = async (req, res) => {
+  try {
+    const { username, image, description } = req.body;
+
+    if (!image || !description) {
+      return res
+        .status(406)
+        .json({ error: "You must put a description or upload a image" });
+    }
+    const user = await prisma.thread.create({
+      data: {
+        description,
+        media: image,
+        createdAt: new Date(),
+        state: true,
+        User: {
+          connect: {
+            id: username.id,
+          },
+        },
+        Replies: {
+          create: {},
+        },
+      },
+    });
+    return res.status(201).json({ user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Something went wrong" });
+  }
+};
